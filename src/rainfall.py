@@ -4,9 +4,8 @@
 ## Created by Jan Zajicek, FCE, CTU Prague, 2012-2013
 
 import numpy as np
-import main_src.constants as constants
+import src.constants as constants
 import sys
-import main_src.io_functions.prt as prt
 
 
 
@@ -29,7 +28,7 @@ def load_precipitation(fh):
             y1 = float(z[1])/1000.0  #prevod na metry
             if y1 < y2:
               #@jj
-              prt.message( "Rainfall must be imputed in cumulative form")
+              print  "Rainfall must be imputed in cumulative form"
               sys.exit()
               #prt.message("Rainfall must be imputed in cumulative form")
               break
@@ -79,7 +78,7 @@ def load_precipitation(fh):
 
 
   except IOError:
-    prt.message("The file does not exist!")
+    print "The file does not exist!"
   except:
     prt.message("Unexpected error:", sys.exc_info()[0])
     raise
