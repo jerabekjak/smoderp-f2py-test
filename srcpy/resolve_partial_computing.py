@@ -99,4 +99,5 @@ print '--------- ---------- - ---- ---------'
 
 for item in sld.load_data(indata):
   print type(item)
+  print item
 

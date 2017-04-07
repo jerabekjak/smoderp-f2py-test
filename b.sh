@@ -16,7 +16,7 @@
 # indata/DS_plochamalyNx.save
 # indata/ada.save
 
-# nejdrive je treba vyrobit mod soubory
+# nejdrive je treba vyrobit mod soubory v adresari kde jsou
 # gfortran -c test2.f90
 # f2py -c test.f90 -m test
 
