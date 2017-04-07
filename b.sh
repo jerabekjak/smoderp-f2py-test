@@ -15,6 +15,11 @@
 # indata/dp_hodne_bodu_tok.save
 # indata/DS_plochamalyNx.save
 # indata/ada.save
+
+# nejdrive je treba vyrobit mod soubory
+# gfortran -c test2.f90
+# f2py -c test.f90 -m test
+
 # '''
 
 python main.py \

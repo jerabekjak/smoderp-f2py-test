@@ -95,3 +95,8 @@ if not os.path.exists(output):
 print '--------- po nacteni z save ---------'    
 prt_sys_argv()
 print '--------- ---------- - ---- ---------'    
+
+
+for item in sld.load_data(indata):
+  print type(item)
+

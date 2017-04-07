@@ -202,6 +202,8 @@ def set_argv(id_,value):
 def prt_sys_argv():
   for item in sys.argv:
     print item
+    
+  
 
 
 
