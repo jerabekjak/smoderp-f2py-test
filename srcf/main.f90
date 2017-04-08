@@ -41,7 +41,7 @@ subroutine main(mat_boundary, &
   real, dimension(:,:), intent(in) :: mat_hcrit
   real, dimension(:,:), intent(in) :: mat_aa
   real, dimension(:,:), intent(in) :: mat_b
-  real, dimension(:,:), intent(in) :: mat_fd
+  integer, dimension(:,:), intent(in) :: mat_fd
   real, dimension(:,:), intent(in) :: mat_dmt
   real, dimension(:,:), intent(in) :: mat_efect_vrst
   real, dimension(:,:), intent(in) :: mat_slope
@@ -55,7 +55,9 @@ subroutine main(mat_boundary, &
   integer                          :: itera
   character(*)                     :: output
 
-
+  
+  
+  
   type(inflowst), dimension(rows,cols) :: inflows
 
   integer :: i, j
