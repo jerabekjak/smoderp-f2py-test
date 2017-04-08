@@ -97,7 +97,7 @@ prt_sys_argv()
 print '--------- ---------- - ---- ---------'    
 
 
-for item in sld.load_data(indata):
-  print type(item)
-  print item
+#for item in sld.load_data(indata):
+  #print type(item)
+  #print item
 

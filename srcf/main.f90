@@ -23,11 +23,12 @@ subroutine main(mat_boundary, &
                 sr, itera, output )
   
   use types
+  use fnc
   implicit none
   
   
   
-  real, dimension(:,:), intent(in) :: mat_boundary
+  integer, dimension(:,:), intent(in) :: mat_boundary
   real, intent(in)                 :: x_coordinate
   real, intent(in)                 ::  y_coordinate
   real, intent(in)                 :: NoDataValue
@@ -56,31 +57,38 @@ subroutine main(mat_boundary, &
   character(*)                     :: output
 
   
-  
-  
   type(inflowst), dimension(rows,cols) :: inflows
-
+  type(kdepocitat) :: loop
+  
+! 
   integer :: i, j
-  
-  do i = 1, rows
-    do j = 1, cols
-    print *, inflows(i,j)%n
-  end do
-  end do
+! !   
+!   do i = 1, rows
+!   
+!     print *, mat_boundary(i,:)
+! 
+!   end do
 
   
   
+!   
+  call make_ij(rows,cols,loop,mat_boundary)
   
-  
-  
-    
-    
+  print *, loop%n
+  do i = 1, loop%n
+    print *, loop%ij(i,:)
+  end do
     
     
     
 
-  
+!   contains
   
   
   
 end subroutine main
+
+
+
+  
+  
