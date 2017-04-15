@@ -59,9 +59,10 @@ subroutine main(mat_boundary, &
   
   type(inflowst), dimension(rows,cols) :: inflows
   type(kdepocitat) :: loop
+  type(neznamat)   :: h
   
 ! 
-  integer :: i, j
+  integer :: i, j, n
 ! !   
 !   do i = 1, rows
 !   
@@ -73,11 +74,40 @@ subroutine main(mat_boundary, &
   
 !   
   call make_ij(rows,cols,loop,mat_boundary)
+  call make_inflows(rows,cols,inflows,mat_fd)
+  h%n = loop%n
+  allocate(h%totnew(1:h%n))
+  allocate(h%totpre(1:h%n))
+  allocate(h%sheet(1:h%n))
+  allocate(h%rill(1:h%n))
   
-  print *, loop%n
-  do i = 1, loop%n
-    print *, loop%ij(i,:)
+  do i = 1, h%n
+    h%totnew(i) = 0.0_8
+    h%totpre(i) = 0.0_8
+    h%sheet(i) = 0.0_8
+    h%rill(i) = 0.0_8
   end do
+  
+  print *, h%totnew
+  
+  
+  
+  
+!   do i = 1, ubound(sr,1)
+!     print *, sr(i,:)
+!   end do
+  
+  
+  
+  
+!   print *, loop%n
+    
+!       do i = 2, (rows-1)
+!       do j = 2, (cols-1)
+!         print *, inflows(i,j)%n
+!         print *, inflows(i,j)%in
+!       end do
+!       end do
     
     
     
