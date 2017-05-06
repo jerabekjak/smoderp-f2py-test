@@ -59,91 +59,13 @@ module fnc
         end if 
         
       
-      
-      
-      
-!         print *, fd(i,j)
-        
-!         if (fd(i,j) == 1   ) then
-!           ii = i
-!           jj = j + 1
-!           n = n + 1
-!           wrkin(n,:) = (/ii,jj/)
-!         end if  
-!         
-!         if (fd(i,j) == 2   ) then
-!           ii = i + 1
-!           jj = j + 1
-!           n = n + 1
-!           wrkin(n,:) = (/ii,jj/)
-!         end if 
-!         if (fd(i,j) == 4   ) then
-!           ii = i + 1
-!           jj = j
-!           n = n + 1
-!           wrkin(n,:) = (/ii,jj/)
-!         end if 
-!         
-!         
-!         if (fd(i,j) == 8   ) then
-!           ii = i + 1
-!           jj = j - 1
-!           n = n + 1
-!           wrkin(n,:) = (/ii,jj/)
-!         end if 
-!         
-!         if (fd(i,j) == 16  ) then
-!           ii = i
-!           jj = j - 1
-!           n = n + 1
-!           wrkin(n,:) = (/ii,jj/)
-!         end if 
-!         
-!         
-!         if (fd(i,j) == 62  ) then
-!           ii = i - 1
-!           jj = j - 1
-!           n = n + 1
-!           wrkin(n,:) = (/ii,jj/)
-!         end if 
-!         
-!         
-!         if (fd(i,j) == 64  ) then
-!           ii = i - 1
-!           jj = j
-!           n = n + 1
-!           wrkin(n,:) = (/ii,jj/)
-!         end if 
-!         
-!         
-!         if (fd(i,j) == 128 ) then
-!           ii = i - 1
-!           jj = j + 1
-!           n = n + 1
-!           wrkin(n,:) = (/ii,jj/)
-!         end if 
-!         
+ 
         
         
       end do
     end do
     
-!     
-!     
-!     do i = 2, (r-1)
-!       do j = 2, (c-1)
-!       
-!       
-!         n = n
-!         print *, n
-!         if (n > 0) then
-!           allocate(inflows(i,j)%in(2,1:n))
-!           inflows(ii,jj)%in(1:n,2) = wrkin(1:n,2)
-!         end if
-!         
-!       end do
-!     end do
-!     
+
 
   
   end subroutine make_inflows
@@ -187,6 +109,35 @@ module fnc
     
     
   end subroutine make_ij
+  
+  
+  !> prevede pripravenou combinatIndex na fortran
+  !  type 1d pole zacinajici od 0 (python)
+  subroutine make_infiltration(combinatIndex,infcoef)
+    use types
+    real, dimension(:,:), intent(in) :: combinatIndex
+    type(infcoeft), dimension(0:), intent(inout) :: infcoef
+    
+    
+    integer :: i, n
+    
+    n = ubound(combinatIndex,1)
+    
+    do i = 1, n
+      infcoef(combinatIndex(i,1))%k = combinatIndex(i,2)
+      infcoef(combinatIndex(i,1))%s = combinatIndex(i,3)
+    end do
+    
+    
+    
+  
+  end subroutine make_infiltration
+  
+  
+  
+  
+  
+  
   
   
   

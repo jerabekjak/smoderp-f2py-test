@@ -1,7 +1,9 @@
 module types
 
   type, public :: inflowst
+    !> z kolika bunek tece do aktualni (muze byt nula)
     integer :: n = 0
+    !> souradnice bunky
     integer, allocatable, dimension(:,:) :: in
   end type inflowst
 
@@ -16,6 +18,9 @@ module types
   end type neznamat
   
   
-  
+  type, public :: infcoeft
+    real :: k
+    real :: s
+  end type infcoeft
   
 end module types

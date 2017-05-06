@@ -306,5 +306,87 @@ subroutine f90wrap_neznamat_finalise(this)
     deallocate(this_ptr%p)
 end subroutine f90wrap_neznamat_finalise
 
+subroutine f90wrap_infcoeft__get__k(this, f90wrap_k)
+    use types, only: infcoeft
+    implicit none
+    type infcoeft_ptr_type
+        type(infcoeft), pointer :: p => NULL()
+    end type infcoeft_ptr_type
+    integer, intent(in)   :: this(2)
+    type(infcoeft_ptr_type) :: this_ptr
+    real, intent(out) :: f90wrap_k
+    
+    this_ptr = transfer(this, this_ptr)
+    f90wrap_k = this_ptr%p%k
+end subroutine f90wrap_infcoeft__get__k
+
+subroutine f90wrap_infcoeft__set__k(this, f90wrap_k)
+    use types, only: infcoeft
+    implicit none
+    type infcoeft_ptr_type
+        type(infcoeft), pointer :: p => NULL()
+    end type infcoeft_ptr_type
+    integer, intent(in)   :: this(2)
+    type(infcoeft_ptr_type) :: this_ptr
+    real, intent(in) :: f90wrap_k
+    
+    this_ptr = transfer(this, this_ptr)
+    this_ptr%p%k = f90wrap_k
+end subroutine f90wrap_infcoeft__set__k
+
+subroutine f90wrap_infcoeft__get__s(this, f90wrap_s)
+    use types, only: infcoeft
+    implicit none
+    type infcoeft_ptr_type
+        type(infcoeft), pointer :: p => NULL()
+    end type infcoeft_ptr_type
+    integer, intent(in)   :: this(2)
+    type(infcoeft_ptr_type) :: this_ptr
+    real, intent(out) :: f90wrap_s
+    
+    this_ptr = transfer(this, this_ptr)
+    f90wrap_s = this_ptr%p%s
+end subroutine f90wrap_infcoeft__get__s
+
+subroutine f90wrap_infcoeft__set__s(this, f90wrap_s)
+    use types, only: infcoeft
+    implicit none
+    type infcoeft_ptr_type
+        type(infcoeft), pointer :: p => NULL()
+    end type infcoeft_ptr_type
+    integer, intent(in)   :: this(2)
+    type(infcoeft_ptr_type) :: this_ptr
+    real, intent(in) :: f90wrap_s
+    
+    this_ptr = transfer(this, this_ptr)
+    this_ptr%p%s = f90wrap_s
+end subroutine f90wrap_infcoeft__set__s
+
+subroutine f90wrap_infcoeft_initialise(this)
+    use types, only: infcoeft
+    implicit none
+    
+    type infcoeft_ptr_type
+        type(infcoeft), pointer :: p => NULL()
+    end type infcoeft_ptr_type
+    type(infcoeft_ptr_type) :: this_ptr
+    integer, intent(out), dimension(2) :: this
+    allocate(this_ptr%p)
+    this = transfer(this_ptr, this)
+end subroutine f90wrap_infcoeft_initialise
+
+subroutine f90wrap_infcoeft_finalise(this)
+    use types, only: infcoeft
+    implicit none
+    
+    type infcoeft_ptr_type
+        type(infcoeft), pointer :: p => NULL()
+    end type infcoeft_ptr_type
+    type(infcoeft_ptr_type) :: this_ptr
+    integer, intent(in), dimension(2) :: this
+    this_ptr = transfer(this, this_ptr)
+    deallocate(this_ptr%p)
+end subroutine f90wrap_infcoeft_finalise
+
 ! End of module types defined in file types.f90
 
