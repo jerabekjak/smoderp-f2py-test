@@ -7,6 +7,7 @@ module process
   !  na rozhladni t a t+dt
   !  vraci vysku
   subroutine currrain(it, sr, t, dt, cr)
+    use types
     integer, intent(inout)  :: it
     real, dimension(:,:)    :: sr
     real, intent(in)        :: t
@@ -27,6 +28,7 @@ module process
   
   !>  vraci vysku
   function infiltration(ks, t, dt) result(inf)
+    use types
     real, dimension(1:2), intent(in) :: ks
     real, intent(in)     :: t
     real, intent(in)     :: dt
@@ -49,6 +51,7 @@ module process
   ! na V se prevede jako dt * q * dx
   ! vraci vysku
   function sheet(a, b, h, ef, pixel,dt) result(q)
+    use types
     real, intent(in)     :: a
     real, intent(in)     :: b
     real, intent(in)     :: h

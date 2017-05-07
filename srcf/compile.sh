@@ -1,4 +1,23 @@
 #!/bin/bash
+
+
+rm *.so *.o *.mod
+
+
+
+f90wrap -m types types.f90
+gfortran -c types.f90
+gfortran -c -fPIC gvar.f90
+gfortran -c -fPIC fnc.f90
+gfortran -c -fPIC process.f90
+gfortran -c -fPIC runoff.f90
+f2py -c f90wrap_types.f90 types.o fnc.o process.o runoff.o main.f90 -m main
+
+
+
+
+
+
 # f90wrap -m fnc fnc.f90 types.f90
 
 # f2py -c -m main fnc.f90 f90wrap_*.f90 *.o
@@ -15,16 +34,7 @@
 # gfortran -c f90wrap_types.o fnc.o -o main
 
 
-rm *.so *.o *.mod
 
-
-
-f90wrap -m types types.f90
-gfortran -c types.f90
-gfortran -c -fPIC fnc.f90
-gfortran -c -fPIC process.f90
-gfortran -c -fPIC runoff.f90
-f2py -c f90wrap_types.f90 types.o fnc.o process.o runoff.o main.f90 -m main
 
 
 

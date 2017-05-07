@@ -80,27 +80,42 @@ module fnc
     type(kdepocitat), intent(inout):: loop
     integer, dimension(:,:), intent(in) :: bcmat
     
-    integer :: i, j, n, in
+    integer :: i, j, n, nbc, in, inbc
     
-    n = 0
-    in = 1
+    n   = 0
+    nbc = 0
+    in  = 1
+    inbc = 1
     
     do i = 1, r
       do j = 1, c
         if (bcmat(i,j) == 0) then
           n = n + 1
         end if 
+        if (bcmat(i,j) == -99) then
+          nbc = nbc + 1
+        end if
       end do
     end do
     
-    loop%n = n
+    
+    
+    
+    loop%n   = n
+    loop%nbc = nbc
+    loop%ntot = n + nbc
     allocate(loop%ij(n,2))
+    allocate(loop%ijbc(nbc,2))
     
     do i = 1, r
       do j = 1, c
         if (bcmat(i,j) == 0) then
           loop%ij(in,:) = (/i,j/)
           in = in + 1
+        end if 
+        if (bcmat(i,j) == -99) then
+          loop%ijbc(inbc,:) = (/i,j/)
+          inbc = inbc + 1
         end if 
       end do
     end do
@@ -118,16 +133,16 @@ module fnc
     real, dimension(:,:), intent(in) :: combinatIndex
     type(infcoeft), dimension(0:), intent(inout) :: infcoef
     
-    
     integer :: i, n
     
+
     n = ubound(combinatIndex,1)
     
     do i = 1, n
-      infcoef(combinatIndex(i,1))%k = combinatIndex(i,2)
-      infcoef(combinatIndex(i,1))%s = combinatIndex(i,3)
+      infcoef(int(combinatIndex(i,1)))%k = combinatIndex(i,2)
+      infcoef(int(combinatIndex(i,1)))%s = combinatIndex(i,3)
     end do
-    
+  
     
     
   
@@ -135,7 +150,59 @@ module fnc
   
   
   
+  subroutine prtsparse(n,A)
+    use types
+    implicit none
+    integer, intent(in)                        :: n
+    type(sparsematt), dimension(:), intent(in) :: A
+    
+    real, dimension(n) :: wrk
+    
+    character(len=16)  :: form
+    
+    integer :: i, j, m, k
+    
+    
+    
+    write(form,'(a, i5,7a)') '(',n, 'e12.3)'
+    
+!     write(*,form) wrk
+    
+    
+    do i = 1, n
+      wrk = 0.0
+      
+      do k = 1, A(i)%n
+        wrk(A(i)%i(k)) = A(i)%val(k)
+      end do
+      
+      write(*,form) wrk
+      
+      
+!       m = A(i)%n
+!       k = 1
+!       do j = 1, n
+!         
+!         if (i==j) then
+!           write(*,'(e10.3)',advance='no') A(i)%val(1)
+!         else if (k <= m) then
+!           if (j==A(i)%i(k)) then
+!             write(*,'(e10.3)',advance='no') A(i)%val(k+1)
+!             k = k + 1
+!           end if
+!         else
+!           write(*,'(e10.3)',advance='no') 0.000
+!         end if
+!         
+!       end do
+!       write(*,*)
+    end do
+    
+    
+    
+    
   
+  end subroutine prtsparse
   
   
   

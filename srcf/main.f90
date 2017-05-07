@@ -24,7 +24,7 @@ subroutine main(mat_boundary, &
   
   use types
   use fnc
-!   use process
+!   use proces()s
   use runoff
   implicit none
   
@@ -62,8 +62,6 @@ subroutine main(mat_boundary, &
   
   !> pro kazdou bukdu se definuje odkud do ni tece
   type(inflowst), dimension(rows,cols) :: inflows
-  !> stores the runoff head before bilance
-  real, dimension(rows,cols)           :: runoff
   type(kdepocitat) :: loop
   type(neznamat)   :: h
   !> dimension je od 0 pac v mat_inf_index jsou indexi puthnovsky od nuly
@@ -72,18 +70,18 @@ subroutine main(mat_boundary, &
   
   
   integer :: i, j, n, ii, jj, ir, jr
-  real :: t, dt
-  real :: cr !> current rain head
-  real :: cin !> current inflow head
-  real :: cinf !> current infiltration head
-  real, dimension(1:2) :: ks  !> current infiltration parameters
-  logical :: exit_
+
   
+!   do i = 1, ubound(mat_boundary,1)
+!     print *, mat_boundary(i,:)
+!   end do
+!   do i = 1, ubound(mat_boundary,1)
+!     print *, mat_fd(i,:)
+!   end do
   
+
   
-  
-  
-  
+
   
   !
   !
@@ -105,7 +103,6 @@ subroutine main(mat_boundary, &
   !  init 
   !
   !
-  runoff = 0.0_8
   call make_ij(rows,cols,loop,mat_boundary)
   call make_inflows(rows,cols,inflows,mat_fd)
   call make_infiltration(combinatIndex,infcoef)
@@ -123,9 +120,20 @@ subroutine main(mat_boundary, &
     h%rill(i) = 0.0_8
   end do
   
-  t  = 0 
-  print *, 'dt [s]:'
-  read  *,  dt
+  
+!   print *, loop%n
+!   do i = 1, loop%n
+!     print *, loop%ij(i,:)
+!   end do
+!   print *, loop%nbc
+!   do i = 1, loop%nbc
+!     print *, loop%ijbc(i,:)
+!   end do
+  
+  
+
+  
+  
   !
   !
   !
@@ -141,12 +149,12 @@ subroutine main(mat_boundary, &
   !
   !
   !
-  
-  
-  call compute(t,dt,end_time, &
+
+  call compute(rows, cols, end_time, &
                itera, sr, &
-               loop, inflow, infcoef, h, &
-               mat_aa, mat_b, mat_efect_vrst)
+               loop, inflows, infcoef, h, &
+               mat_aa, mat_b, mat_efect_vrst, &
+               mat_inf_index,pixel_area)
   
   
   
@@ -198,7 +206,7 @@ subroutine main(mat_boundary, &
 !         cin = cin + runoff(ir,jr)
 !       end do
 !       ks  = (/ infcoef(mat_inf_index(ii,jj))%k, infcoef(mat_inf_index(ii,jj))%s /)
-!       cinf = infiltration(ks,t,dt)
+! !       cinf = infiltration(ks,t,dt)
 !       ! tady bez infiltrace, mozna se to totiz vse vsakne
 !       h%totnew(i) = h%totpre(i) + cr + cin - runoff(ii,jj)
 !       h%totnew(i) = max(0.0, h%totnew(i) - cinf)

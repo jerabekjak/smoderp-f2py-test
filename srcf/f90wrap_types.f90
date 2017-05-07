@@ -106,6 +106,62 @@ subroutine f90wrap_kdepocitat__set__n(this, f90wrap_n)
     this_ptr%p%n = f90wrap_n
 end subroutine f90wrap_kdepocitat__set__n
 
+subroutine f90wrap_kdepocitat__get__nbc(this, f90wrap_nbc)
+    use types, only: kdepocitat
+    implicit none
+    type kdepocitat_ptr_type
+        type(kdepocitat), pointer :: p => NULL()
+    end type kdepocitat_ptr_type
+    integer, intent(in)   :: this(2)
+    type(kdepocitat_ptr_type) :: this_ptr
+    integer, intent(out) :: f90wrap_nbc
+    
+    this_ptr = transfer(this, this_ptr)
+    f90wrap_nbc = this_ptr%p%nbc
+end subroutine f90wrap_kdepocitat__get__nbc
+
+subroutine f90wrap_kdepocitat__set__nbc(this, f90wrap_nbc)
+    use types, only: kdepocitat
+    implicit none
+    type kdepocitat_ptr_type
+        type(kdepocitat), pointer :: p => NULL()
+    end type kdepocitat_ptr_type
+    integer, intent(in)   :: this(2)
+    type(kdepocitat_ptr_type) :: this_ptr
+    integer, intent(in) :: f90wrap_nbc
+    
+    this_ptr = transfer(this, this_ptr)
+    this_ptr%p%nbc = f90wrap_nbc
+end subroutine f90wrap_kdepocitat__set__nbc
+
+subroutine f90wrap_kdepocitat__get__ntot(this, f90wrap_ntot)
+    use types, only: kdepocitat
+    implicit none
+    type kdepocitat_ptr_type
+        type(kdepocitat), pointer :: p => NULL()
+    end type kdepocitat_ptr_type
+    integer, intent(in)   :: this(2)
+    type(kdepocitat_ptr_type) :: this_ptr
+    integer, intent(out) :: f90wrap_ntot
+    
+    this_ptr = transfer(this, this_ptr)
+    f90wrap_ntot = this_ptr%p%ntot
+end subroutine f90wrap_kdepocitat__get__ntot
+
+subroutine f90wrap_kdepocitat__set__ntot(this, f90wrap_ntot)
+    use types, only: kdepocitat
+    implicit none
+    type kdepocitat_ptr_type
+        type(kdepocitat), pointer :: p => NULL()
+    end type kdepocitat_ptr_type
+    integer, intent(in)   :: this(2)
+    type(kdepocitat_ptr_type) :: this_ptr
+    integer, intent(in) :: f90wrap_ntot
+    
+    this_ptr = transfer(this, this_ptr)
+    this_ptr%p%ntot = f90wrap_ntot
+end subroutine f90wrap_kdepocitat__set__ntot
+
 subroutine f90wrap_kdepocitat__array__ij(this, nd, dtype, dshape, dloc)
     use types, only: kdepocitat
     implicit none
@@ -129,6 +185,30 @@ subroutine f90wrap_kdepocitat__array__ij(this, nd, dtype, dshape, dloc)
         dloc = 0
     end if
 end subroutine f90wrap_kdepocitat__array__ij
+
+subroutine f90wrap_kdepocitat__array__ijbc(this, nd, dtype, dshape, dloc)
+    use types, only: kdepocitat
+    implicit none
+    type kdepocitat_ptr_type
+        type(kdepocitat), pointer :: p => NULL()
+    end type kdepocitat_ptr_type
+    integer, intent(in) :: this(2)
+    type(kdepocitat_ptr_type) :: this_ptr
+    integer, intent(out) :: nd
+    integer, intent(out) :: dtype
+    integer, dimension(10), intent(out) :: dshape
+    integer*8, intent(out) :: dloc
+    
+    nd = 2
+    dtype = 5
+    this_ptr = transfer(this, this_ptr)
+    if (allocated(this_ptr%p%ijbc)) then
+        dshape(1:2) = shape(this_ptr%p%ijbc)
+        dloc = loc(this_ptr%p%ijbc)
+    else
+        dloc = 0
+    end if
+end subroutine f90wrap_kdepocitat__array__ijbc
 
 subroutine f90wrap_kdepocitat_initialise(this)
     use types, only: kdepocitat
@@ -387,6 +467,100 @@ subroutine f90wrap_infcoeft_finalise(this)
     this_ptr = transfer(this, this_ptr)
     deallocate(this_ptr%p)
 end subroutine f90wrap_infcoeft_finalise
+
+subroutine f90wrap_sparsematt__array__i(this, nd, dtype, dshape, dloc)
+    use types, only: sparsematt
+    implicit none
+    type sparsematt_ptr_type
+        type(sparsematt), pointer :: p => NULL()
+    end type sparsematt_ptr_type
+    integer, intent(in) :: this(2)
+    type(sparsematt_ptr_type) :: this_ptr
+    integer, intent(out) :: nd
+    integer, intent(out) :: dtype
+    integer, dimension(10), intent(out) :: dshape
+    integer*8, intent(out) :: dloc
+    
+    nd = 1
+    dtype = 5
+    this_ptr = transfer(this, this_ptr)
+    dshape(1:1) = shape(this_ptr%p%i)
+    dloc = loc(this_ptr%p%i)
+end subroutine f90wrap_sparsematt__array__i
+
+subroutine f90wrap_sparsematt__get__n(this, f90wrap_n)
+    use types, only: sparsematt
+    implicit none
+    type sparsematt_ptr_type
+        type(sparsematt), pointer :: p => NULL()
+    end type sparsematt_ptr_type
+    integer, intent(in)   :: this(2)
+    type(sparsematt_ptr_type) :: this_ptr
+    integer, intent(out) :: f90wrap_n
+    
+    this_ptr = transfer(this, this_ptr)
+    f90wrap_n = this_ptr%p%n
+end subroutine f90wrap_sparsematt__get__n
+
+subroutine f90wrap_sparsematt__set__n(this, f90wrap_n)
+    use types, only: sparsematt
+    implicit none
+    type sparsematt_ptr_type
+        type(sparsematt), pointer :: p => NULL()
+    end type sparsematt_ptr_type
+    integer, intent(in)   :: this(2)
+    type(sparsematt_ptr_type) :: this_ptr
+    integer, intent(in) :: f90wrap_n
+    
+    this_ptr = transfer(this, this_ptr)
+    this_ptr%p%n = f90wrap_n
+end subroutine f90wrap_sparsematt__set__n
+
+subroutine f90wrap_sparsematt__array__val(this, nd, dtype, dshape, dloc)
+    use types, only: sparsematt
+    implicit none
+    type sparsematt_ptr_type
+        type(sparsematt), pointer :: p => NULL()
+    end type sparsematt_ptr_type
+    integer, intent(in) :: this(2)
+    type(sparsematt_ptr_type) :: this_ptr
+    integer, intent(out) :: nd
+    integer, intent(out) :: dtype
+    integer, dimension(10), intent(out) :: dshape
+    integer*8, intent(out) :: dloc
+    
+    nd = 1
+    dtype = 11
+    this_ptr = transfer(this, this_ptr)
+    dshape(1:1) = shape(this_ptr%p%val)
+    dloc = loc(this_ptr%p%val)
+end subroutine f90wrap_sparsematt__array__val
+
+subroutine f90wrap_sparsematt_initialise(this)
+    use types, only: sparsematt
+    implicit none
+    
+    type sparsematt_ptr_type
+        type(sparsematt), pointer :: p => NULL()
+    end type sparsematt_ptr_type
+    type(sparsematt_ptr_type) :: this_ptr
+    integer, intent(out), dimension(2) :: this
+    allocate(this_ptr%p)
+    this = transfer(this_ptr, this)
+end subroutine f90wrap_sparsematt_initialise
+
+subroutine f90wrap_sparsematt_finalise(this)
+    use types, only: sparsematt
+    implicit none
+    
+    type sparsematt_ptr_type
+        type(sparsematt), pointer :: p => NULL()
+    end type sparsematt_ptr_type
+    type(sparsematt_ptr_type) :: this_ptr
+    integer, intent(in), dimension(2) :: this
+    this_ptr = transfer(this, this_ptr)
+    deallocate(this_ptr%p)
+end subroutine f90wrap_sparsematt_finalise
 
 ! End of module types defined in file types.f90
 
