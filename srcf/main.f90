@@ -24,7 +24,8 @@ subroutine main(mat_boundary, &
   
   use types
   use fnc
-  use process
+!   use process
+  use runoff
   implicit none
   
   
@@ -124,7 +125,7 @@ subroutine main(mat_boundary, &
   
   t  = 0 
   print *, 'dt [s]:'
-  read *, dt
+  read  *,  dt
   !
   !
   !
@@ -133,74 +134,97 @@ subroutine main(mat_boundary, &
   !
 
 
-
+  !
+  !
+  !
+  ! computation
+  !
+  !
+  !
   
-  do
-    t = t + dt
-    if (t > end_time) exit
-    
-    ! dest je vsude konstantni
-    call currrain(itera, sr, t, dt, cr)
-    
-    exit_ = .false.
-
-    ! i j cyklus
-    do i = 1, loop%n
-      ii = loop%ij(i,1)
-      jj = loop%ij(i,2)
-      runoff(ii,jj) = sheet(mat_aa(ii,jj), mat_b(ii,jj), h%totpre(i),mat_efect_vrst(ii,jj),pixel_area,dt)
-      if (runoff(ii,jj)*dt/mat_efect_vrst(ii,jj)>0.54) then
-        print *, runoff(ii,jj)*dt/mat_efect_vrst(ii,jj)
-        t  = t-dt
-        dt = 0.54*mat_efect_vrst(ii,jj)/runoff(ii,jj)
-        exit_ = .true.
-        exit
-      end if 
-    end do
-    
-    if (.not. exit_) then
-!     print *, ' '
-    ! i j cyklus
-    do i = 1, loop%n
-!     if (exit_) exit
-      ii = loop%ij(i,1)
-      jj = loop%ij(i,2)
-      
-      cin = 0.0
-      do j = 1, inflows(ii,jj)%n
-        ir = inflows(ii,jj)%in(j,1)
-        jr = inflows(ii,jj)%in(j,2)
-!         print *, '               ', ir, jr, runoff(ir,jr)
-        cin = cin + runoff(ir,jr)
-      end do
-      ks  = (/ infcoef(mat_inf_index(ii,jj))%k, infcoef(mat_inf_index(ii,jj))%s /)
-      cinf = infiltration(ks,t,dt)
-      ! tady bez infiltrace, mozna se to totiz vse vsakne
-      h%totnew(i) = h%totpre(i) + cr + cin - runoff(ii,jj)
-      h%totnew(i) = max(0.0, h%totnew(i) - cinf)
-      cinf         = min(h%totnew(i),     cinf)
-!       print *, h%totnew(i), h%totpre(i) , cr , cin , cinf , runoff(ii,jj)
-      if ( h%totnew(i) < 0 ) ERROR stop
-    end do
   
-    do i = 1, loop%n
-!     if (exit_) exit
-      if (i == 1) then
-        write(101,*)  t, h%totpre(i), cr, cin, cinf, runoff(ii,jj), h%totnew(i), dt/60
-      end if
-      if (i == int(loop%n/2)) then
-        write(102,*) t, h%totpre(i), cr, cin, cinf, runoff(ii,jj), h%totnew(i), dt/60
-      end if
-      if (i == loop%n) then
-        write(103,*) t, h%totpre(i), cr, cin, cinf, runoff(ii,jj), h%totnew(i), dt/60
-      end if
-      h%totpre(i) = h%totnew(i)
-      
-    end do
-    end if 
-    
-!     read(*,*)
-  end do
+  call compute(t,dt,end_time, &
+               itera, sr, &
+               loop, inflow, infcoef, h, &
+               mat_aa, mat_b, mat_efect_vrst)
+  
+  
+  
+  
+  
+  !
+  !
+  !
+  ! end computation
+  !
+  !
+  !
+!   do
+!     t = t + dt
+!     if (t > end_time) exit
+!     
+!     ! dest je vsude konstantni
+!     call currrain(itera, sr, t, dt, cr)
+!     
+!     exit_ = .false.
+! 
+!     ! i j cyklus
+!     do i = 1, loop%n
+!       ii = loop%ij(i,1)
+!       jj = loop%ij(i,2)
+!       runoff(ii,jj) = sheet(mat_aa(ii,jj), mat_b(ii,jj), h%totpre(i),mat_efect_vrst(ii,jj),pixel_area,dt)
+!       if (runoff(ii,jj)*dt/mat_efect_vrst(ii,jj)>0.54) then
+!         print *, runoff(ii,jj)*dt/mat_efect_vrst(ii,jj)
+!         t  = t-dt
+!         dt = 0.54*mat_efect_vrst(ii,jj)/runoff(ii,jj)
+!         exit_ = .true.
+!         exit
+!       end if 
+!     end do
+!     
+!     if (.not. exit_) then
+! !     print *, ' '
+!     ! i j cyklus
+!     do i = 1, loop%n
+! !     if (exit_) exit
+!       ii = loop%ij(i,1)
+!       jj = loop%ij(i,2)
+!       
+!       cin = 0.0
+!       do j = 1, inflows(ii,jj)%n
+!         ir = inflows(ii,jj)%in(j,1)
+!         jr = inflows(ii,jj)%in(j,2)
+! !         print *, '               ', ir, jr, runoff(ir,jr)
+!         cin = cin + runoff(ir,jr)
+!       end do
+!       ks  = (/ infcoef(mat_inf_index(ii,jj))%k, infcoef(mat_inf_index(ii,jj))%s /)
+!       cinf = infiltration(ks,t,dt)
+!       ! tady bez infiltrace, mozna se to totiz vse vsakne
+!       h%totnew(i) = h%totpre(i) + cr + cin - runoff(ii,jj)
+!       h%totnew(i) = max(0.0, h%totnew(i) - cinf)
+!       cinf         = min(h%totnew(i),     cinf)
+! !       print *, h%totnew(i), h%totpre(i) , cr , cin , cinf , runoff(ii,jj)
+!       if ( h%totnew(i) < 0 ) ERROR stop
+!     end do
+!   
+!     do i = 1, loop%n
+! !     if (exit_) exit
+!       if (i == 1) then
+!         write(101,*)  t, h%totpre(i), cr, cin, cinf, runoff(ii,jj), h%totnew(i), dt/60
+!       end if
+!       if (i == int(loop%n/2)) then
+!         write(102,*) t, h%totpre(i), cr, cin, cinf, runoff(ii,jj), h%totnew(i), dt/60
+!       end if
+!       if (i == loop%n) then
+!         write(103,*) t, h%totpre(i), cr, cin, cinf, runoff(ii,jj), h%totnew(i), dt/60
+!       end if
+!       h%totpre(i) = h%totnew(i)
+!       
+!     end do
+!     end if 
+!     
+! !     read(*,*)
+!   end do
   
   
   

@@ -23,7 +23,8 @@ f90wrap -m types types.f90
 gfortran -c types.f90
 gfortran -c -fPIC fnc.f90
 gfortran -c -fPIC process.f90
-f2py -c f90wrap_types.f90 types.o fnc.o process.o main.f90 -m main
+gfortran -c -fPIC runoff.f90
+f2py -c f90wrap_types.f90 types.o fnc.o process.o runoff.o main.f90 -m main
 
 
 
