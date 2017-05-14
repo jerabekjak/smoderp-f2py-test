@@ -75,17 +75,18 @@ module fnc
   
   subroutine make_ij(r,c,loop,bcmat)
     use types
-    
+    implicit none
     integer,  intent(in)      :: r,c
     type(kdepocitat), intent(inout):: loop
     integer, dimension(:,:), intent(in) :: bcmat
     
-    integer :: i, j, n, nbc, in, inbc
+    integer :: i, j, n, nbc, in, nin, ncin, bcin
     
-    n   = 0
-    nbc = 0
-    in  = 1
-    inbc = 1
+    n   = 0  ! kolik bunek v oblasni
+    nbc = 0  ! kolik bunek na okraji
+    in  = 1  ! pozice v loop%ij
+    nin = 1  ! pozice v loop%nc
+    bcin= 1  ! pozice v loop%nbc
     
     do i = 1, r
       do j = 1, c
@@ -104,24 +105,57 @@ module fnc
     loop%n   = n
     loop%nbc = nbc
     loop%ntot = n + nbc
-    allocate(loop%ij(n,2))
-    allocate(loop%ijbc(nbc,2))
+    
+    allocate(loop%mi(  1:r,1:c   ))
+    allocate(loop%ij(  n + nbc,2 ))
+    allocate(loop%nc(  n ))
+    allocate(loop%bcc( nbc ))
+  
+
+    
     
     do i = 1, r
       do j = 1, c
         if (bcmat(i,j) == 0) then
           loop%ij(in,:) = (/i,j/)
+          loop%mi(i,j)  = in
+          loop%nc(nin)  = in
           in = in + 1
+          nin= nin + 1
         end if 
         if (bcmat(i,j) == -99) then
-          loop%ijbc(inbc,:) = (/i,j/)
-          inbc = inbc + 1
+          loop%ij(in,:)   = (/i,j/)
+          loop%mi(i,j)    = in
+          loop%bcc(bcin)  = in
+          in = in + 1
+          bcin = bcin + 1
         end if 
       end do
     end do
     
     
     
+!                               print *, 
+!                               do i = 1, loop%n
+!                                 print *, i, loop%nc(i)
+!                               end do
+!                               print *, 
+!                               do i = 1, loop%nbc
+!                                 print *, i, loop%bcc(i)
+!                               end do
+!                               print *, 
+!                               do i = 1, loop%ntot
+!                                 print *, i, loop%ij(i,:)
+!                               end do
+!                               print *, 
+!                               do i = 1, ubound(loop%mi,1)
+!                                 print *, loop%mi(i,:)
+!                               end do
+!                               print *, 
+!                               do i = 1, ubound(bcmat,1)
+!                                 print *, bcmat(i,:)
+!                               end do
+!                               stop
     
   end subroutine make_ij
   
@@ -198,11 +232,66 @@ module fnc
 !       write(*,*)
     end do
     
+  end subroutine prtsparse
+  
+
+  
+  
+  
+  subroutine prtarrint(arr)
+    use types
+    integer, dimension(:,:), intent(in) :: arr
     
+    character(len=16)  :: form
+    
+    integer :: i, j, n, m, k
+    
+    
+    n = ubound(arr,1)
+    write(form,'(a, i5,7a)') '(',n, 'i5)'
+    
+!     write(*,form) wrk
+    
+    
+    do i = 1, n
+
+      
+      write(*,form) arr(i,:)
+      
+
+    end do
     
     
   
-  end subroutine prtsparse
+  end subroutine prtarrint
+  
+  
+  subroutine prtarrreal(arr)
+    use types
+    real, dimension(:,:), intent(in) :: arr
+    
+    character(len=16)  :: form
+    
+    integer :: i, j, n, m, k
+    
+    
+    n = ubound(arr,1)
+    write(form,'(a, i5,7a)') '(',n, 'e12.3)'
+    
+!     write(*,form) wrk
+    
+    
+    do i = 1, n
+
+      
+      write(*,form) arr(i,:)
+      
+
+    end do
+    
+    
+  
+  end subroutine prtarrreal
   
   
   

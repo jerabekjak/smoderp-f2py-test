@@ -1,0 +1,117 @@
+\documentclass{article}
+
+% \usepackage[cp1250]{inputenc}
+% \usepackage[czech]{babel}
+
+\usepackage[left=10mm,right=10mm,top=10mm,bottom=10mm]
+  {geometry}
+\usepackage{pdflscape}
+\thispagestyle{empty}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+
+
+
+\begin{document}
+
+% \begin{landscape}
+% 
+%  
+% 
+% \begin{tabular}{c|c}
+%  explicitní  &  implicitní \\
+%  $\frac{h_{t} - h_{t-1}}{\triangle t} = f(h_{t-1},t-1)$ &  $\frac{h_{t} - h_{t-1}}{\triangle t} = f(h_{t},t)$
+% \end{tabular}\\[3ex]
+% 
+
+
+
+
+
+implicitne
+
+
+$$
+  \frac{h_{i,t}-h_{i,t-1}}{\triangle t} =  es_{i,t} + \sum_{j}^{inflows}q(h_{j,t})^{in}_{j,t} - q(h_{i,t})^{out}_{i,t} - inf_{i,t}
+% 
+$$
+
+
+
+$$
+  \frac{ h_{i,t}}{\triangle t}  - es_{i,t} - \sum_{j}^{inflows}q(h_{j,t})^{in}_{j,t} + q(h_{i,t})^{out}_{i,t} + inf_{i,t} = \frac{ h_{i,t-1}}{\triangle t }
+% 
+$$
+
+
+
+
+$$
+  \frac{ h_{i,t}}{\triangle t}  - es_{i,t} - \sum_{j}^{inflows}ah_{j,t}^{b} + ah_{i,t}^{b} + inf_{i,t} = \frac{ h_{i,t-1}}{\triangle t }
+% 
+$$
+
+
+
+
+
+$$
+  h_{i,t}  +   ah_{i,t}^{b}\triangle t - \sum_{j}^{inflows} ah_{j,t}^{b}\triangle t  = h_{i,t-1} +  es_{i,t} \triangle t-  inf_{i,t}\triangle t
+$$
+
+
+
+
+$$
+  h_{i,t}  +   a h_{i,t} h_{i,t}^{b-1} \triangle t - \sum_{j}^{inflows} ah_{j,t}h_{j,t}^{b-1}\triangle t  = h_{i,t-1} +  es_{i,t} \triangle t-  inf_{i,t}\triangle t
+$$
+
+
+
+
+
+
+$$
+  (1  +   a h_{i,t}^{b-1} \triangle t ) h_{i,t} - \sum_{j}^{inflows}( ah_{j,t}^{b-1}\triangle t )h_{j,t} = h_{i,t-1} +  es_{i,t} \triangle t-  inf_{i,t}\triangle t
+$$
+
+
+
+\begin{center}
+\includegraphics[width=5cm]{ctverec.png}
+\end{center}
+
+$
+\begin{matrix}
+  \\
+  row: 5 \\
+  \\
+\end{matrix}
+\begin{pmatrix}
+  \vdots & \vdots  &  & & & &\\
+  0 & - a h_{2,t}^{b-1} \triangle t & - a h_{3,t}^{b-1}\triangle t & 0  &  a h_{5,t}^{b-1} \triangle t& 0  &  \cdots \\
+  \vdots & \vdots  &  & & & &\\
+\end{pmatrix}
+% 
+\begin{pmatrix}
+  \vdots \\
+  h_{2,t} \\
+  h_{3,t}\\
+  h_{4,t}  \\
+  h_{5,t} \\
+  \vdots  \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+  \vdots \\
+  h_{2,t-1} +  es_{2,t} \triangle t-  inf_{2,t}\triangle t \\
+  h_{3,t-1} +  es_{3,t} \triangle t-  inf_{3,t}\triangle t \\
+  h_{4,t-1} +  es_{4,t} \triangle t-  inf_{4,t}\triangle t \\
+  h_{5,t-1} +  es_{5,t} \triangle t-  inf_{5,t}\triangle t \\
+  \vdots  \\
+\end{pmatrix}
+% 
+$
+
+\end{document}

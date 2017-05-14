@@ -71,6 +71,9 @@ subroutine main(mat_boundary, &
   
   integer :: i, j, n, ii, jj, ir, jr
 
+
+  
+  
   
 !   do i = 1, ubound(mat_boundary,1)
 !     print *, mat_boundary(i,:)
@@ -87,9 +90,9 @@ subroutine main(mat_boundary, &
   !
   !
   !
-  open(unit=101,file='out1.txt',status='replace',action='write')
-  open(unit=102,file='out2.txt',status='replace',action='write')
-  open(unit=103,file='out3.txt',status='replace',action='write')
+!   open(unit=101,file='out1.txt',status='replace',action='write')
+!   open(unit=102,file='out2.txt',status='replace',action='write')
+!   open(unit=103,file='out3.txt',status='replace',action='write')
   
   !
   !
@@ -107,7 +110,7 @@ subroutine main(mat_boundary, &
   call make_inflows(rows,cols,inflows,mat_fd)
   call make_infiltration(combinatIndex,infcoef)
   
-  h%n = loop%n
+  h%n = loop%ntot
   allocate(h%totnew(1:h%n))
   allocate(h%totpre(1:h%n))
   allocate(h%sheet(1:h%n))
@@ -115,21 +118,33 @@ subroutine main(mat_boundary, &
   
   do i = 1, h%n
     h%totnew(i) = 0.0_8
-    h%totpre(i) = 0.0_8
+    h%totpre(i) = 1.0_8
     h%sheet(i) = 1.0_8
     h%rill(i) = 0.0_8
   end do
   
   
-!   print *, loop%n
+!   print *, 'tot'
+!   do i = 1, loop%ntot
+!     print *, i, loop%ij(i,:)
+!   end do
+!   
+!   print *, 'nc'
 !   do i = 1, loop%n
-!     print *, loop%ij(i,:)
+!     j = loop%nc(i)
+!     print *, j, loop%ij(j,:)
 !   end do
-!   print *, loop%nbc
+!   
+!   
+!   print *, 'bcc'
 !   do i = 1, loop%nbc
-!     print *, loop%ijbc(i,:)
+!     j = loop%bcc(i)
+!     print *, j, loop%ij(j,:)
 !   end do
-  
+!   
+!   
+!   print *, 
+!   call prtarrint(loop%mi)
   
 
   
@@ -140,6 +155,11 @@ subroutine main(mat_boundary, &
   !  end init 
   !
   !
+  
+
+      
+      
+      
 
 
   !

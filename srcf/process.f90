@@ -6,13 +6,12 @@ module process
   !> zatim funguje jen pro krabici a nedela zbytek 
   !  na rozhladni t a t+dt
   !  vraci vysku
-  subroutine currrain(it, sr, t, dt, cr)
+  function currrain(it, sr, t) result(cr)
     use types
     integer, intent(inout)  :: it
     real, dimension(:,:)    :: sr
     real, intent(in)        :: t
-    real, intent(in)        :: dt
-    real, intent(out)     :: cr
+    real    :: cr
     
     if (t > sr(it,1)) then
       cr = 0
@@ -20,18 +19,17 @@ module process
 !       it = it + 1
     end if 
     
-    cr = sr(it,2)*dt
+    cr = sr(it,2)
     
     
-  end subroutine currrain
+  end function currrain
   
   
-  !>  vraci vysku
-  function infiltration(ks, t, dt) result(inf)
+  !>  vraci intezitu
+  function infiltration(ks, t) result(inf)
     use types
     real, dimension(1:2), intent(in) :: ks
     real, intent(in)     :: t
-    real, intent(in)     :: dt
     real                 :: inf
     
     real :: k
@@ -41,7 +39,7 @@ module process
     s = ks(2)
     
   
-    inf = (0.5*s/sqrt(t+dt) + k) * dt
+    inf = (0.5*s/sqrt(t+dt) + k) 
   
   end function infiltration
   
@@ -50,18 +48,18 @@ module process
   !> q je specificky prutok
   ! na V se prevede jako dt * q * dx
   ! vraci vysku
-  function sheet(a, b, h, ef, pixel,dt) result(q)
+  function sheet(a, b, h, ef, pixel) result(q)
     use types
     real, intent(in)     :: a
     real, intent(in)     :: b
     real, intent(in)     :: h
     real, intent(in)     :: ef
     real, intent(in)     :: pixel
-    real, intent(in)     :: dt
     real                 :: q 
     
 
-    q = a*h**b*ef*dt/pixel
+    q = a*h**b*ef/pixel
+    
     
   end function sheet
   

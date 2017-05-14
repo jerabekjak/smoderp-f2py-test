@@ -15,10 +15,16 @@ module types
 
   type, public :: kdepocitat
     integer :: n    = 0
+    !> nornam cell
+    integer, allocatable, dimension(:)   :: nc
     integer :: nbc  = 0
+    !> boundary condition cell
+    integer, allocatable, dimension(:)   :: bcc
     integer :: ntot = 0
     integer, allocatable, dimension(:,:) :: ij
-    integer, allocatable, dimension(:,:) :: ijbc
+!     integer, allocatable, dimension(:,:) :: ijbc
+    ! stores position in ij and ijbc
+    integer, allocatable, dimension(:,:) :: mi
   end type kdepocitat
   
   type, public :: neznamat
@@ -31,6 +37,12 @@ module types
     real :: k
     real :: s
   end type infcoeft
+  
+  
+  
+  
+  
+  
   
   
   type, public :: sparsematt

@@ -106,6 +106,30 @@ subroutine f90wrap_kdepocitat__set__n(this, f90wrap_n)
     this_ptr%p%n = f90wrap_n
 end subroutine f90wrap_kdepocitat__set__n
 
+subroutine f90wrap_kdepocitat__array__nc(this, nd, dtype, dshape, dloc)
+    use types, only: kdepocitat
+    implicit none
+    type kdepocitat_ptr_type
+        type(kdepocitat), pointer :: p => NULL()
+    end type kdepocitat_ptr_type
+    integer, intent(in) :: this(2)
+    type(kdepocitat_ptr_type) :: this_ptr
+    integer, intent(out) :: nd
+    integer, intent(out) :: dtype
+    integer, dimension(10), intent(out) :: dshape
+    integer*8, intent(out) :: dloc
+    
+    nd = 1
+    dtype = 5
+    this_ptr = transfer(this, this_ptr)
+    if (allocated(this_ptr%p%nc)) then
+        dshape(1:1) = shape(this_ptr%p%nc)
+        dloc = loc(this_ptr%p%nc)
+    else
+        dloc = 0
+    end if
+end subroutine f90wrap_kdepocitat__array__nc
+
 subroutine f90wrap_kdepocitat__get__nbc(this, f90wrap_nbc)
     use types, only: kdepocitat
     implicit none
@@ -133,6 +157,30 @@ subroutine f90wrap_kdepocitat__set__nbc(this, f90wrap_nbc)
     this_ptr = transfer(this, this_ptr)
     this_ptr%p%nbc = f90wrap_nbc
 end subroutine f90wrap_kdepocitat__set__nbc
+
+subroutine f90wrap_kdepocitat__array__bcc(this, nd, dtype, dshape, dloc)
+    use types, only: kdepocitat
+    implicit none
+    type kdepocitat_ptr_type
+        type(kdepocitat), pointer :: p => NULL()
+    end type kdepocitat_ptr_type
+    integer, intent(in) :: this(2)
+    type(kdepocitat_ptr_type) :: this_ptr
+    integer, intent(out) :: nd
+    integer, intent(out) :: dtype
+    integer, dimension(10), intent(out) :: dshape
+    integer*8, intent(out) :: dloc
+    
+    nd = 1
+    dtype = 5
+    this_ptr = transfer(this, this_ptr)
+    if (allocated(this_ptr%p%bcc)) then
+        dshape(1:1) = shape(this_ptr%p%bcc)
+        dloc = loc(this_ptr%p%bcc)
+    else
+        dloc = 0
+    end if
+end subroutine f90wrap_kdepocitat__array__bcc
 
 subroutine f90wrap_kdepocitat__get__ntot(this, f90wrap_ntot)
     use types, only: kdepocitat
@@ -186,7 +234,7 @@ subroutine f90wrap_kdepocitat__array__ij(this, nd, dtype, dshape, dloc)
     end if
 end subroutine f90wrap_kdepocitat__array__ij
 
-subroutine f90wrap_kdepocitat__array__ijbc(this, nd, dtype, dshape, dloc)
+subroutine f90wrap_kdepocitat__array__mi(this, nd, dtype, dshape, dloc)
     use types, only: kdepocitat
     implicit none
     type kdepocitat_ptr_type
@@ -202,13 +250,13 @@ subroutine f90wrap_kdepocitat__array__ijbc(this, nd, dtype, dshape, dloc)
     nd = 2
     dtype = 5
     this_ptr = transfer(this, this_ptr)
-    if (allocated(this_ptr%p%ijbc)) then
-        dshape(1:2) = shape(this_ptr%p%ijbc)
-        dloc = loc(this_ptr%p%ijbc)
+    if (allocated(this_ptr%p%mi)) then
+        dshape(1:2) = shape(this_ptr%p%mi)
+        dloc = loc(this_ptr%p%mi)
     else
         dloc = 0
     end if
-end subroutine f90wrap_kdepocitat__array__ijbc
+end subroutine f90wrap_kdepocitat__array__mi
 
 subroutine f90wrap_kdepocitat_initialise(this)
     use types, only: kdepocitat

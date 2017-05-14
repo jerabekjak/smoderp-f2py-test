@@ -15,6 +15,7 @@
 # indata/dp_hodne_bodu_tok.save
 # indata/DS_plochamalyNx.save
 # indata/ada.save
+# indata/nucice_rillsheet_dem20m.save
 
 # nejdrive je treba vyrobit mod soubory v adresari kde jsou
 # gfortran -c test2.f90
